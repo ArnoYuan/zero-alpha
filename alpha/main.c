@@ -58,11 +58,11 @@ int main(void)
     while (1)
     {
         gpio_direction_output(&led0, PIN_LEVEL_LOW);
-        gpio_direction_output(&beep, PIN_LEVEL_LOW);
+        //gpio_direction_output(&beep, PIN_LEVEL_LOW);
         delay(500);
 
         gpio_direction_output(&led0, PIN_LEVEL_HIGH);
-        gpio_direction_output(&beep, PIN_LEVEL_HIGH);
+        //gpio_direction_output(&beep, PIN_LEVEL_HIGH);
         delay(500);
     }
 

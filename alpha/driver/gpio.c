@@ -31,7 +31,7 @@ void imx6ul_gpio_write(gpio_chip_t* chip, pin_name_t pin_name, pin_level_t level
 
     ze_u32_t value = map->port->DR;
     value &= ~(1 << map->pin);
-    value |= (1 << (level == PIN_LEVEL_HIGH ? 1 : 0));
+    value |= ((level == PIN_LEVEL_HIGH ? 1 : 0) << map->pin);
     map->port->DR = value;
 }
 
@@ -46,7 +46,7 @@ void imx6ul_gpio_write_direction(gpio_chip_t* chip, pin_name_t pin_name, pin_dir
     const pin_map_t* map = imx6ul_find_gpio(pin_name);
     ze_u32_t value = map->port->GDIR;
     value &= ~(1 << map->pin);
-    value |= (1 << (dir == PIN_DIR_INPUT ? 0 : 1));
+    value |= ((dir == PIN_DIR_INPUT ? 0 : 1) << map->pin);
 
     map->port->GDIR = value;
 }
@@ -68,7 +68,7 @@ const gpio_chip_operations_t imx6ul_gpio_ops = {
 void gpio_hw_init(gpio_chip_t* chip)
 {
 
-    IOMUXC_SetPinMux(IOMUXC_GPIO1_IO03_GPIO1_IO03, 0);
+    IOMUXC_SetPinMux(IOMUXC_GPIO1_IO03_GPIO1_IO03, 0x0);
     IOMUXC_SetPinConfig(IOMUXC_GPIO1_IO03_GPIO1_IO03, 0X10B0);
 
     IOMUXC_SetPinMux(IOMUXC_SNVS_SNVS_TAMPER1_GPIO5_IO01, 0);
